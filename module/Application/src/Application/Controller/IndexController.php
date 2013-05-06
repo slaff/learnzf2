@@ -16,6 +16,11 @@ class IndexController extends AbstractActionController
 {
 	public function indexAction()
 	{
-	        return array('version'=> '0.0.1', 'applicationName'=> "Training Center");
+        $serviceLocator = $this->getServiceLocator();
+        $config = $serviceLocator->get('config');
+        return array(
+                    'version'=> $config['application']['version'], 
+                    'applicationName' => $config['application']['name']
+                );
 	}
 }
