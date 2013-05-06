@@ -1,16 +1,11 @@
 <?php
-/**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/Debug for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- */
-
 namespace Debug;
 
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\Mvc\ModuleRouteListener;
+use Zend\ModuleManager\ModuleManager;
+use Zend\ModuleManager\ModuleEvent;
+use Zend\EventManager\Event;
 
 class Module implements AutoloaderProviderInterface
 {
@@ -32,6 +27,19 @@ class Module implements AutoloaderProviderInterface
     public function getConfig()
     {
         return include __DIR__ . '/config/module.config.php';
+    }
+    
+    public function init(ModuleManager $moduleManager)
+    {
+    	$eventManager = $moduleManager->getEventManager();
+    	$eventManager->attach(ModuleEvent::EVENT_LOAD_MODULES_POST, array($this, 'loadedModulesInfo'));
+    }
+    
+    public function loadedModulesInfo(Event $event)
+    {
+    	$moduleManager = $event->getTarget();
+    	$loadedModules = $moduleManager->getLoadedModules();
+    	error_log(var_export($loadedModules, true));
     }
 
     public function onBootstrap($e)
