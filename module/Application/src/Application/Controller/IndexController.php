@@ -23,4 +23,9 @@ class IndexController extends AbstractActionController
                     'applicationName' => $config['application']['name']
                 );
 	}
+	
+	public function aboutAction()
+	{
+		return array();
+	}
 }
