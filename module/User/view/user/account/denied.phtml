@@ -1,0 +1,9 @@
+<?= $this->translate('You do not have access to this page.') ?>
+<a href="<?php
+
+echo $this->url('user/default', array(
+                                    'controller'=>'log',
+                                    'action'    => 'in',
+                                ));
+
+?>"><?= $this->translate('Log in') ?></a> with user that has the correct access.
