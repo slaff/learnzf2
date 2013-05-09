@@ -6,6 +6,7 @@ use Zend\ModuleManager\ModuleManager;
 use Zend\ModuleManager\ModuleEvent;
 use Zend\EventManager\Event;
 use Zend\Mvc\MvcEvent;
+use Zend\View\Model\ViewModel;
 
 class Module implements AutoloaderProviderInterface
 {
@@ -57,6 +58,8 @@ class Module implements AutoloaderProviderInterface
 		// The priory here is 2 because listeners with that priority will be executed just before the
 		// actual finish event is triggered.
 		$eventManager->attach(MvcEvent::EVENT_FINISH, array($this,'getMvcDuration'),2);
+		
+		$eventManager->attach(MvcEvent::EVENT_RENDER,array($this,'addDebugOverlay'),100);
 	}
     
     public function handleError(MvcEvent $event) 
@@ -83,5 +86,16 @@ class Module implements AutoloaderProviderInterface
     	$duration = $timer->stop('mvc-execution');
     	// and finally print the duration
     	error_log("MVC Duration:".$duration." seconds");
+    }
+    
+    public function addDebugOverlay(MvcEvent $event)
+    {
+    	$viewModel = $event->getViewModel();
+    	 
+    	$sidebarView = new ViewModel();
+    	$sidebarView->setTemplate('debug/layout/sidebar');
+    	$sidebarView->addChild($viewModel, 'content');
+    	 
+    	$event->setViewModel($sidebarView);
     }
 }
