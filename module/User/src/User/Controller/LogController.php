@@ -21,5 +21,19 @@ class LogController extends AbstractActionController
        
         $username = $this->params()->fromPost('username');
         $password = $this->params()->fromPost('password');
+        
+        // @todo: When the authentication is implemented the hard-coded value below has to be removed.
+        $isValid = 1;
+        if($isValid) {
+        	$this->flashmessenger()->addSuccessMessage('You are now logged in.');
+        	 
+        	return $this->redirect()->toRoute('user/default', array (
+        			'controller' => 'account',
+        			'action'     => 'me',
+        	));
+        }
+        else {
+        	// @todo: report some errors
+        }
     }
 }

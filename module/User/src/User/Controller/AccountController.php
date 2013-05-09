@@ -76,4 +76,9 @@ class AccountController extends AbstractActionController
         	));
         }
     }
+    
+    public function meAction()
+    {	
+    	return array();
+    }
 }
