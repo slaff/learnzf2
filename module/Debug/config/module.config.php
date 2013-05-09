@@ -51,8 +51,11 @@ return array(
 	    'factories' => array(
 	    	'timer' => 'Debug\Service\Factory\Timer' 
 	    ),
+		'initializers' => array(
+			'Debug\Service\Initializer\DbProfiler',
+		),	
 		'aliases' => array(
-				'Application\Timer' => 'timer',
+			'Application\Timer' => 'timer',
 		)		
 	),
 	'timer' => array (
