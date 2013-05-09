@@ -48,8 +48,14 @@ return array(
         ),
     ),
 	'service_manager' => array(
-		'invokables' => array(
-			'timer' => 'Debug\Service\Timer'
-		)
+	    'factories' => array(
+	    	'timer' => 'Debug\Service\Factory\Timer' 
+	    ),
+		'aliases' => array(
+				'Application\Timer' => 'timer',
+		)		
 	),
+	'timer' => array (
+		'times_as_float' => true,
+	)
 );
