@@ -30,6 +30,7 @@ class AccountController extends AbstractActionController
             	$model = $this->serviceLocator->get('table-gateway')->get('users');
             	$id = $model->insert($form->getData());
             	
+            	$this->flashmessenger()->addSuccessMessage('User was added successfully.');
             	
             	// redirect the user to the view user action
             	return $this->redirect()->toRoute('user/default', array (
@@ -79,6 +80,11 @@ class AccountController extends AbstractActionController
     
     public function meAction()
     {	
+    	return array();
+    }
+    
+    public function deniedAction()
+    {
     	return array();
     }
 }
