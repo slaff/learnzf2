@@ -1,3 +1,9 @@
-<strong>Module:</strong>        User &raquo;
-<strong>Controller:</strong>    User &raquo;
-<strong>Action:</strong>        index
+<?php 
+// We call the prepare here in order to fill the initial data and adjust the form properties, if needed
+$this->form1->prepare();
+
+echo $this->form()->openTag($this->form1);
+// The helper below is the one that builds the form elements
+echo $this->formCollection($this->form1);
+echo $this->form()->closeTag();
+?>
