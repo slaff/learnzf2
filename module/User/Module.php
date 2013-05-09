@@ -10,6 +10,7 @@
 namespace User;
 
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
+use Zend\Mvc\MvcEvent;
 
 class Module implements AutoloaderProviderInterface
 {
@@ -33,10 +34,26 @@ class Module implements AutoloaderProviderInterface
         return include __DIR__ . '/config/module.config.php';
     }
 
-    public function onBootstrap($e)
+    public function onBootstrap(MvcEvent $event)
     {
-    	$services = $e->getApplication()->getServiceManager();
+    	$services = $event->getApplication()->getServiceManager();
     	$dbAdapter = $services->get('database');
     	\Zend\Db\TableGateway\Feature\GlobalAdapterFeature::setStaticAdapter($dbAdapter);
+    	
+    	$eventManager = $event->getApplication()->getEventManager();
+    	$eventManager->attach(MvcEvent::EVENT_ROUTE, array($this, 'protectPage'), -100);
+    }
+    
+	public function protectPage(MvcEvent $event)
+    {
+    	$match = $event->getRouteMatch();
+    	if(!$match) {
+    		// we cannot do anything without a resolved route
+    		return;
+    	}
+    	
+    	$controller = $match->getParam('controller');
+    	$action     = $match->getParam('action');
+    	$namespace  = $match->getParam('__NAMESPACE__');
     }
 }
