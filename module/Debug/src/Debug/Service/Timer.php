@@ -19,7 +19,8 @@ class Timer {
      */
     protected $timeAsFloat;
     
-    public function __construct($timeAsFloat=false) {
+    public function __construct($timeAsFloat=false) 
+    {
         $this->timeAsFloat = $timeAsFloat;
     }
     
