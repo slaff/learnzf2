@@ -29,7 +29,14 @@ class AccountController extends AbstractActionController
             	// you can use the table gateway service
             	$model = $this->serviceLocator->get('table-gateway')->get('users');
             	$id = $model->insert($form->getData());
-            	// @todo: put indication that the user was created
+            	
+            	
+            	// redirect the user to the view user action
+            	return $this->redirect()->toRoute('user/default', array (
+	            	    'controller' => 'account',
+	            	    'action'     => 'view',
+            			'id'		 => $id
+            	));
             }
         }
         
@@ -42,7 +49,11 @@ class AccountController extends AbstractActionController
 	 */
 	public function registerAction() 
 	{
-		return array();
+		$result = $this->forward()->dispatch('User\Controller\Account', array(
+            'action' => 'add',
+        ));
+        
+        return $result;
 	}
 
 	public function viewAction() 
