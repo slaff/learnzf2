@@ -1,9 +1,38 @@
 <?php 
 // We call the prepare here in order to fill the initial data and adjust the form properties, if needed
+$this->form1->setAttribute('class','form-horizontal');
 $this->form1->prepare();
 
 echo $this->form()->openTag($this->form1);
-// The helper below is the one that builds the form elements
-echo $this->formCollection($this->form1);
+echo '<fieldset>';
+
+foreach($this->form1 as $element) {
+	if(!($element instanceof Zend\Form\Element\Submit)) {
+?>
+    <div class="control-group">
+	    <?php if($element->getLabel()) { ?>
+	    <label class="control-label" for="<?= $element->getName() ?>"><?= $this->translate($element->getLabel()) ?></label>
+	    <?php } ?>
+	    <div class="controls">
+            <?= $this->formElement($element) ?>
+            <?= $this->formElementErrors($element)?>
+	    </div>
+	</div>
+<?php 	
+	}
+	else {
+        $element->setAttribute('class', 'btn btn-primary');
+?>
+    <div class="form-actions">
+<?= 
+          $this->formelement($element) 
+?>
+    </div>
+<?php 		
+
+	}
+}
+
+echo '</fieldset>';
 echo $this->form()->closeTag();
 ?>
