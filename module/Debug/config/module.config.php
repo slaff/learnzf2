@@ -47,4 +47,9 @@ return array(
             'Debug' => __DIR__ . '/../view',
         ),
     ),
+	'service_manager' => array(
+		'invokables' => array(
+			'timer' => 'Debug\Service\Timer'
+		)
+	),
 );
