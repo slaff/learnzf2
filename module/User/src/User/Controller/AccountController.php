@@ -2,6 +2,7 @@
 namespace User\Controller;
 
 use User\Form\User as UserForm;
+use User\Model\User as UserModel;
 use Zend\Mvc\Controller\AbstractActionController;
 
 class AccountController extends AbstractActionController 
@@ -22,7 +23,9 @@ class AccountController extends AbstractActionController
             );
             $form->setData($data);
             if($form->isValid()) {
-            	// @todo: save the data of the new user 
+            	$model = new UserModel();
+            	$id = $model->insert($form->getData());
+            	// @todo: put indication that the user was created
             }
         }
         
