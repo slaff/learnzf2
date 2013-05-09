@@ -35,6 +35,8 @@ class Module implements AutoloaderProviderInterface
 
     public function onBootstrap($e)
     {
-        
+    	$services = $e->getApplication()->getServiceManager();
+    	$dbAdapter = $services->get('database');
+    	\Zend\Db\TableGateway\Feature\GlobalAdapterFeature::setStaticAdapter($dbAdapter);
     }
 }
