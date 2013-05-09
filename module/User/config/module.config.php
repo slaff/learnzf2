@@ -4,6 +4,7 @@ return array(
         'invokables' => array(
            // below is key              and below is the fully qualified class name
            'User\Controller\Account' => 'User\Controller\AccountController',
+           'User\Controller\Log'     => 'User\Controller\LogController',
         ),
     ),
     'router' => array(
