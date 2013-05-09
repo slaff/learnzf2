@@ -46,9 +46,21 @@ class Module implements AutoloaderProviderInterface
 	{
 		$eventManager        = $e->getApplication()->getEventManager();
 		$eventManager->attach(MvcEvent::EVENT_DISPATCH_ERROR, array($this, 'handleError'));
+		
+		// Below is how we get access to the service manager
+		$serviceManager = $e->getApplication()->getServiceManager();
+		// Here we start the timer
+		$timer = $serviceManager->get('timer');
+		$timer->start('mvc-execution');
+	
+		// And here we attach a listener to the finish event that has to be executed with priority 2
+		// The priory here is 2 because listeners with that priority will be executed just before the
+		// actual finish event is triggered.
+		$eventManager->attach(MvcEvent::EVENT_FINISH, array($this,'getMvcDuration'),2);
 	}
     
-    public function handleError(MvcEvent $event) {
+    public function handleError(MvcEvent $event) 
+    {
     	$controller = $event->getController();
     	$error      = $event->getParam('error');
     	$exception  = $event->getParam('exception');
@@ -60,5 +72,16 @@ class Module implements AutoloaderProviderInterface
     		
     	error_log($message);
     		
+    }
+    
+    public function getMvcDuration(MvcEvent $event)
+    {
+    	// Here we get the service manager
+    	$serviceManager = $event->getApplication()->getServiceManager();
+    	// Get the already created instance of our timer service
+    	$timer = $serviceManager->get('timer');
+    	$duration = $timer->stop('mvc-execution');
+    	// and finally print the duration
+    	error_log("MVC Duration:".$duration." seconds");
     }
 }
