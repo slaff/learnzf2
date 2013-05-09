@@ -48,4 +48,9 @@ return array(
             'User' => __DIR__ . '/../view',
         ),
     ),
+	'service_manager' => array (
+		'factories' => array(
+			'database' => 'User\Service\Factory\Database',
+		)
+	)
 );
