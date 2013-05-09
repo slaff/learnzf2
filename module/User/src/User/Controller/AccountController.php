@@ -23,7 +23,11 @@ class AccountController extends AbstractActionController
             );
             $form->setData($data);
             if($form->isValid()) {
-            	$model = new UserModel();
+            	// You can use the standard way of instantiating a table gateway 
+            	//$model = new UserModel();
+            	// Or if you have many db tables that do need special treatment of the incoming data
+            	// you can use the table gateway service
+            	$model = $this->serviceLocator->get('table-gateway')->get('users');
             	$id = $model->insert($form->getData());
             	// @todo: put indication that the user was created
             }
