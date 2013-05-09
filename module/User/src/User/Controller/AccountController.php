@@ -56,7 +56,13 @@ class AccountController extends AbstractActionController
 	}
 
 	public function deleteAction() 
-	{
-		return array();
-	}
+    {   
+        $id = $this->params('id');
+        if(!$id) {
+        	return $this->redirect()->toRoute('user/default', array(
+        	    'controller' => 'account',
+        	    'action' => 'view',
+        	));
+        }
+    }
 }
