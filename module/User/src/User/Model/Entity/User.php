@@ -8,6 +8,7 @@ class User {
 	protected $email;
 	protected $phone;
 	protected $photo;
+	protected $password;
 
 	/**
 	 * @return the $id
@@ -96,7 +97,49 @@ class User {
 
 	public function setPhoto($photo) 
 	{
-		$this->photo = $photo;
+		if(isset($photo['tmp_name'])) {
+			$this->photo = $photo['tmp_name'];
+		}
 	}
-
+	
+	/**
+	 * Gets the current password hash
+	 *
+	 * @return the $password
+	 */
+	public function getPassword()
+	{
+		return $this->password;
+	}
+	
+	/**
+	 * Sets the password
+	 *
+	 * @param string $password
+	 */
+	public function setPassword($password)
+	{
+		$this->password = $this->hashPassword($password);
+	}
+	
+	/**
+	 * Verifies if the passwords match
+	 *
+	 * @param string $password
+	 * @return boolean
+	 */
+	public function verifyPassword($password)
+	{
+		return ($this->password == $this->hashPassword($password));
+	}
+	
+	/**
+	 * Hashes a password
+	 * @param string $password
+	 * @return string
+	 */
+	private function hashPassword($password)
+	{
+		return md5($password);
+	}
 }
