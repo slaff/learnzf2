@@ -17,9 +17,24 @@ class AccountControllerTest extends AbstractHttpControllerTestCase
     
     public function testMeAction()
     {
-    	$this->dispatch('/user/account/me');
+    	$application = $this->getApplication();
+    	$serviceManager = $application->getServiceManager();
+    	$eventManager   = $application->getEventManager();
+    	
+    	// This is how the request object can be accessed and modified.
+    	$request = $this->getRequest();
+    	
+    	// The dispatch method returns the result. 
+    	$result = $this->dispatch('/user/account/me');
+    	
     	 
     	$this->assertActionName('me');
     	$this->assertControllerName('User\Controller\Account');
+    	
+    	// This is how the response object can be accessed.
+    	$response = $this->getResponse();
+    	
+    	// And here we can use the response to check the status code.
+    	$this->assertEquals(200, $response->getStatusCode());
     }
 }
