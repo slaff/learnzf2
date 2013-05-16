@@ -51,6 +51,11 @@ class AccountController extends AbstractActionController
     			),
     	));
     	
+    	// We bind the entity to the user. If the form tries to read/write data from/to the entity 
+    	// it will use the hydrator specified in the entity to achieve this. In our case we use ClassMethods
+    	// hydrator which means that reading will happen calling the getter methods and writing will happen by
+    	// calling the setter methods.
+    	$form->bind($entity);
     	
         if($this->getRequest()->isPost()) {
             $data = array_merge_recursive(
