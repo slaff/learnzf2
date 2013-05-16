@@ -1,9 +1,9 @@
 <?php
 namespace User\Controller;
 
-use User\Form\User as UserForm;
 use User\Model\User as UserModel;
 use Zend\Mvc\Controller\AbstractActionController;
+use Zend\Form\Annotation\AnnotationBuilder;
 
 class AccountController extends AbstractActionController
 {
@@ -14,7 +14,44 @@ class AccountController extends AbstractActionController
 
     public function addAction()
     {
-        $form = new UserForm();
+    	// The annotation builder help us create a form from the annotations in the user entity.
+    	$builder = new AnnotationBuilder();
+    	$entity = $this->serviceLocator->get('user-entity');
+    	$form = $builder->createForm($entity);
+    	
+    	$form->add(array(
+    			'name' => 'password_verify',
+    			'type' => 'Zend\Form\Element\Password',
+    			'attributes' => array(
+    					'placeholder' => 'Verify Password Here...',
+    					'required' => 'required',
+    			),
+    			'options' => array(
+    					'label' => 'Verify Password',
+    			)
+    	),
+    			array (
+    					'priority' => $form->get('password')->getOption('priority'),
+    			)
+    	);
+    	
+    	// This is the special code that protects our form being submitted from automated scripts
+    	$form->add(array(
+    			'name' => 'csrf',
+    			'type' => 'Zend\Form\Element\Csrf',
+    	));
+    	
+    	// This is the submit button
+    	$form->add(array(
+    			'name' => 'submit',
+    			'type' => 'Zend\Form\Element\Submit',
+    			'attributes' => array(
+    					'value' => 'Submit',
+    					'required' => 'false',
+    			),
+    	));
+    	
+    	
         if($this->getRequest()->isPost()) {
             $data = array_merge_recursive(
                 $this->getRequest()->getPost()->toArray(),
