@@ -60,6 +60,7 @@ return array(
         'factories' => array(
             'translator' => 'Zend\I18n\Translator\TranslatorServiceFactory',
             'cipher'     => 'Application\Service\Factory\SymmetricCipher',
+            'navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',
         ),
     ),
     'translator' => array(
@@ -92,5 +93,25 @@ return array(
         'template_path_stack' => array(
             __DIR__ . '/../view',
         ),
+    ),
+    'navigation' => array(
+    	'default' => array(
+    		array(
+    			'label' => 'Home',
+    			'route' => 'home',
+    			'pages' => array (
+    				array(
+    					'label' => 'About',
+    					'route' => 'application/default',
+    					'controller' => 'index',
+    					'action' => 'about'
+    				),
+    				array(
+    					'label' => 'Book',
+    					'uri'   => 'http://zf2consulting.com',
+    				)
+    			)
+    		),
+    	)
     ),
 );
