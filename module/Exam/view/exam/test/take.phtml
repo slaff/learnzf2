@@ -1,0 +1,15 @@
+<?php
+$form->prepare();
+echo $this->form()->openTag($form);
+foreach ($form as $formElement) {
+    if($formElement instanceof \Exam\Form\Element\Question\QuestionInterface) {
+    	echo $this->formQuestionElement($formElement);
+        
+        echo "<hr>\n";
+    }
+    else {
+    	echo $this->formRow($formElement);
+    }
+}
+
+echo $this->form()->closeTag();
