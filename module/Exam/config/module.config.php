@@ -11,7 +11,7 @@ return array(
                 'type'    => 'Literal',
                 'options' => array(
                     // Change this to something specific to your module
-                    'route'    => '/test',
+                    'route'    => '/exam',
                     'defaults' => array(
                         // Change this value to reflect the namespace in which
                         // the controllers for your module are found
@@ -29,10 +29,11 @@ return array(
                     'default' => array(
                         'type'    => 'Segment',
                         'options' => array(
-                            'route'    => '/[:controller[/:action]]',
+                            'route'    => '/[:controller[/:action[/:id]]]',
                             'constraints' => array(
                                 'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
                                 'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            	'id'         => '[0-9]*',
                             ),
                             'defaults' => array(
                             ),
@@ -47,4 +48,12 @@ return array(
             'Exam' => __DIR__ . '/../view',
         ),
     ),
+	'view_helpers' => array (
+		'invokables' => array (
+			'formMultipleChoice'  => 'Exam\Form\View\Helper\Question\FormMultipleChoice',
+			'formSingleChoice'    => 'Exam\Form\View\Helper\Question\FormSingleChoice',
+			'formFreeText'   	  => 'Exam\Form\View\Helper\Question\FormFreeText',
+			'formQuestionElement' => 'Exam\Form\View\Helper\Question\FormQuestionElement',
+		)
+	),
 );
