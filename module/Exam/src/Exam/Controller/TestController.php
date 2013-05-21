@@ -9,6 +9,7 @@
 
 namespace Exam\Controller;
 
+use Zend\Form\Factory;
 use Zend\Mvc\Controller\AbstractActionController;
 
 class TestController extends AbstractActionController
@@ -18,10 +19,16 @@ class TestController extends AbstractActionController
         return array();
     }
 
-    public function fooAction()
+    public function takeAction()
     {
-        // This shows the :controller and :action parameters in default route
-        // are working when you browse to /test/test/foo
-        return array();
+    	$id = $this->params('id');
+        if(!$id) {
+        	return $this->redirect()->toRoute('exam/list');
+        }
+        
+        $factory = new Factory();
+        $spec = include __DIR__.'/../../../config/form/form1.php';
+        $form = $factory->create($spec);
+        return array('form' => $form);
     }
 }
