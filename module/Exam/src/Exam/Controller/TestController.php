@@ -12,6 +12,7 @@ namespace Exam\Controller;
 use Zend\Form\Factory;
 use Zend\Mvc\Controller\AbstractActionController;
 use Exam\Form\Element\Question\QuestionInterface;
+use Exam\Model\Test;
 
 class TestController extends AbstractActionController
 {
@@ -85,4 +86,26 @@ class TestController extends AbstractActionController
         
         return array('form' => $form);
     }
+    
+    /**
+     * Deletes all tests in the database and adds the default ones.
+     */
+    public function resetAction()
+    {
+    	$model = new Test();
+    	$model->delete(array());
+    	 
+    	// fill the default tests
+    	$manager = $this->serviceLocator->get('test-manager');
+    	$tests = $manager->getDefaultTests();
+    	foreach ($tests as $test) {
+    		$data = $test['info'];
+    		$data['definition'] = json_encode($test);
+    		$manager->store($data);
+    	}
+    	 
+    	$this->flashmessenger()->addSuccessMessage('The default tests were added');
+    	return $this->redirect()->toRoute('exam/list');
+    }
+    
 }
