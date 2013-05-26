@@ -56,4 +56,9 @@ return array(
 			'formQuestionElement' => 'Exam\Form\View\Helper\Question\FormQuestionElement',
 		)
 	),
+	'service_manager' => array(
+		'invokables' => array(
+			'test-manager' => 'Exam\Model\TestManager',
+		)
+	)
 );
