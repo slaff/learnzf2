@@ -9,7 +9,6 @@
 
 namespace Exam\Controller;
 
-use Zend\Form\Factory;
 use Zend\Mvc\Controller\AbstractActionController;
 use Exam\Form\Element\Question\QuestionInterface;
 use Exam\Model\Test;
@@ -28,9 +27,8 @@ class TestController extends AbstractActionController
         	return $this->redirect()->toRoute('exam/list');
         }
         
-        $factory = new Factory();
-        $spec = include __DIR__.'/../../../config/form/form1.php';
-        $form = $factory->create($spec);
+        $testManager = $this->serviceLocator->get('test-manager');
+        $form = $testManager->createForm($id);
         
         $form->setAttribute('method', 'POST');
          
