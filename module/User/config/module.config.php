@@ -49,6 +49,7 @@ return array(
         'template_path_stack' => array(
             'User' => __DIR__ . '/../view',
         ),
+    	'template_map' => include __DIR__  . '/../template_map.php',
     ),
     'service_manager' => array (
         'factories' => array(
