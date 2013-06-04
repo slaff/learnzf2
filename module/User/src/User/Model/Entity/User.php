@@ -6,196 +6,212 @@ use Zend\Form\Annotation;
 /**
  * @Annotation\Name("users")
  * @Annotation\Hydrator("Zend\Stdlib\Hydrator\ClassMethods")
+ *
+ * @Entity @Table(name="users")
  */
-class User 
+class User
 {
-	/**
-	 * @Annotation\Exclude()
-	 */
-	protected $id;
-	
-	/**
-	 * @Annotation\Exclude()
-	 */
-	protected $role;
-	
-	/**
-	* @Annotation\Type("Zend\Form\Element\Email")
-	* @Annotation\Validator({"name":"EmailAddress"})
-	* @Annotation\Options({"label":"Email:"})
-	* @Annotation\Attributes({"type":"email","required": true,"placeholder": "Email Address..."})
-	* @Annotation\Flags({"priority": "500"})
-	*/
-	protected $email;
-	
-	/**
-	 * @Annotation\Type("Zend\Form\Element\Password")
-	 * @Annotation\Filter({"name":"StripTags"})
-	 * @Annotation\Filter({"name":"StringTrim"})
-	 * @Annotation\Options({"label":"Password:", "priority": "400"})
-	 * @Annotation\Flags({"priority": "400"})
-	 */
-	protected $password;
-	
-	/**
-	 * @Annotation\Type("Zend\Form\Element\Text")
-	 * @Annotation\Filter({"name":"StripTags"})
-	 * @Annotation\Filter({"name":"StringTrim"})
-	 * @Annotation\Options({"label":"Name:"})
-	 * @Annotation\Attributes({"required": true,"placeholder":"Type name..."})
-	 * @Annotation\Flags({"priority": "300"})
-	 */
-	protected $name;
-	
-	/**
-	 * @Annotation\Type("Zend\Form\Element\Text")
-	 * @Annotation\Options({"label":"Your phone number:"})
-	 * @Annotation\Filter({"name":"StripTags"})
-	 * @Annotation\Filter({"name":"StringTrim"})
-	 * @Annotation\Validator({"name":"RegEx", "options": {"pattern": "/^[\d-\/]+$/"}})
-	 * @Annotation\Attributes({"type":"tel","required": true,"pattern": "^[\d-/]+$"})
-	 * @Annotation\Flags({"priority": "200"})
-	 */
-	protected $phone;
-	
-	/**
-	 * @Annotation\Type("Zend\Form\Element\File")
-	 * @Annotation\Options({"label":"Your photo:"})
-	 * @Annotation\Attributes({"id":"photo","required": true})
-	 * @Annotation\Flags({"priority": "100"})
-	 */
-	protected $photo;
+    /**
+     * @Annotation\Exclude()
+     *
+     * @Id @GeneratedValue @Column(type="integer")
+     */
+    protected $id;
 
-	/**
-	 * @return the $id
-	 */
-	public function getId() 
-	{
-		return $this->id;
-	}
+    /**
+     * @Annotation\Exclude()
+     *
+     * @Column(type="string")
+     */
+    protected $role;
 
-	/**
-	 * @return the $role
-	 */
-	public function getRole() 
-	{
-		return $this->role;
-	}
+    /**
+    * @Annotation\Type("Zend\Form\Element\Email")
+    * @Annotation\Validator({"name":"EmailAddress"})
+    * @Annotation\Options({"label":"Email:"})
+    * @Annotation\Attributes({"type":"email","required": true,"placeholder": "Email Address..."})
+    * @Annotation\Flags({"priority": "500"})
+    *
+    * @Column(type="string")
+    */
+    protected $email;
 
-	/**
-	 * @return the $email
-	 */
-	public function getEmail() 
-	{
-		return $this->email;
-	}
+    /**
+     * @Annotation\Type("Zend\Form\Element\Password")
+     * @Annotation\Filter({"name":"StripTags"})
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Options({"label":"Password:", "priority": "400"})
+     * @Annotation\Flags({"priority": "400"})
+     *
+     * @Column(type="string")
+     */
+    protected $password;
 
-	/**
-	 * @return the $phone
-	 */
-	public function getPhone() 
-	{
-		return $this->phone;
-	}
+    /**
+     * @Annotation\Type("Zend\Form\Element\Text")
+     * @Annotation\Filter({"name":"StripTags"})
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Options({"label":"Name:"})
+     * @Annotation\Attributes({"required": true,"placeholder":"Type name..."})
+     * @Annotation\Flags({"priority": "300"})
+     *
+     * @Column(type="string")
+     */
+    protected $name;
 
-	/**
-	 * @param field_type $id
-	 */
-	public function setId($id) 
-	{
-		$this->id = $id;
-	}
+    /**
+     * @Annotation\Type("Zend\Form\Element\Text")
+     * @Annotation\Options({"label":"Your phone number:"})
+     * @Annotation\Filter({"name":"StripTags"})
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"RegEx", "options": {"pattern": "/^[\d-\/]+$/"}})
+     * @Annotation\Attributes({"type":"tel","required": true,"pattern": "^[\d-/]+$"})
+     * @Annotation\Flags({"priority": "200"})
+     *
+     * @Column(type="string")
+     */
+    protected $phone;
 
-	/**
-	 * @param field_type $role
-	 */
-	public function setRole($role) 
-	{
-		$this->role = $role;
-	}
+    /**
+     * @Annotation\Type("Zend\Form\Element\File")
+     * @Annotation\Options({"label":"Your photo:"})
+     * @Annotation\Attributes({"id":"photo","required": true})
+     * @Annotation\Flags({"priority": "100"})
+     *
+     * @Column(type="string")
+     */
+    protected $photo;
 
-	/**
-	 * @param field_type $email
-	 */
-	public function setEmail($email) 
-	{
-		$this->email = $email;
-	}
+    /**
+     * @return the $id
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
-	/**
-	 * @param field_type $phone
-	 */
-	public function setPhone($phone) 
-	{
-		$this->phone = $phone;
-	}
+    /**
+     * @return the $role
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
 
-	/**
-	 * @return the $name
-	 */
-	public function getName() 
-	{
-		return $this->name;
-	}
+    /**
+     * @return the $email
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
 
-	/**
-	 * @param field_type $name
-	 */
-	public function setName($name) 
-	{
-		$this->name = $name;
-	}
+    /**
+     * @return the $phone
+     */
+    public function getPhone()
+    {
+        return $this->phone;
+    }
 
-	public function getPhoto() 
-	{
-		return $this->photo;
-	}
+    /**
+     * @param field_type $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
 
-	public function setPhoto($photo) 
-	{
-		if(isset($photo['tmp_name'])) {
-			$this->photo = $photo['tmp_name'];
-		}
-	}
-	
-	/**
-	 * Gets the current password hash
-	 *
-	 * @return the $password
-	 */
-	public function getPassword()
-	{
-		return $this->password;
-	}
-	
-	/**
-	 * Sets the password
-	 *
-	 * @param string $password
-	 */
-	public function setPassword($password)
-	{
-		$this->password = $this->hashPassword($password);
-	}
-	
-	/**
-	 * Verifies if the passwords match
-	 *
-	 * @param string $password
-	 * @return boolean
-	 */
-	public function verifyPassword($password)
-	{
-		return ($this->password == $this->hashPassword($password));
-	}
-	
-	/**
-	 * Hashes a password
-	 * @param string $password
-	 * @return string
-	 */
-	private function hashPassword($password)
-	{
-		return md5($password);
-	}
+    /**
+     * @param field_type $role
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
+    }
+
+    /**
+     * @param field_type $email
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * @param field_type $phone
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+    }
+
+    /**
+     * @return the $name
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param field_type $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    public function getPhoto()
+    {
+        return $this->photo;
+    }
+
+    public function setPhoto($photo)
+    {
+        if(isset($photo['tmp_name'])) {
+            $this->photo = $photo['tmp_name'];
+        }
+    }
+
+    /**
+     * Gets the current password hash
+     *
+     * @return the $password
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * Sets the password
+     *
+     * @param string $password
+     */
+    public function setPassword($password)
+    {
+        $this->password = $this->hashPassword($password);
+    }
+
+    /**
+     * Verifies if the passwords match
+     *
+     * @param string $password
+     * @return boolean
+     */
+    public function verifyPassword($password)
+    {
+        return ($this->password == $this->hashPassword($password));
+    }
+
+    /**
+     * Hashes a password
+     * @param string $password
+     * @return string
+     */
+    private function hashPassword($password)
+    {
+        return md5($password);
+    }
 }
