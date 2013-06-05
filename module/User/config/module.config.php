@@ -125,5 +125,88 @@ return array(
         'modules' => array (
                 'User',
         ),
-    )
+    ),
+    // Below is the menu navigation for this module
+    'navigation' => array(
+        'default' => array(
+            array(
+                'label' => 'User',
+                'route' => 'user/default',
+                'controller'=> 'account',
+                'pages' => array(
+                        array(
+                            'label' => 'Me',
+                            'route' => 'user/default',
+                            'controller' => 'account',
+                            'action' => 'me',
+                            'resource' => 'account',
+                            'privilege' => 'me',
+                        ),
+                        array(
+                            'label' => 'Add',
+                            'route' => 'user/default',
+                            'controller' => 'account',
+                            'action' => 'add',
+                            'resource' => 'account',
+                            'privilege' => 'add',
+                        ),
+                        array(
+                            'label' => 'View',
+                            'route' => 'user/default',
+                            'controller' => 'account',
+                            'action' => 'view',
+                            'resource' => 'account',
+                            'privilege' => 'view',
+                        ),
+                        array(
+                            'label' => 'Edit',
+                            'route' => 'user/default',
+                            'controller' => 'account',
+                            'action' => 'edit',
+                            'resource' => 'account',
+                            'privilege' => 'edit',
+                        ),
+                        array(
+                            'label' => 'Delete',
+                            'route' => 'user/default',
+                            'controller' => 'account',
+                            'action' => 'delete',
+                            'resource' => 'account',
+                            'privilege' => 'delete',
+                        ),
+                        array(
+                            'label' => 'Log in',
+                            // uri
+                            'route' => 'user/default',
+                            'controller' => 'log',
+                            'action'    => 'in',
+                            // acl
+                            'resource'  => 'log',
+                            'privilege' => 'in'
+                        ),
+
+                        array(
+                            'label' => 'Register',
+                            // uri
+                            'route' => 'user/default',
+                            'controller' => 'account',
+                            'action'     => 'register',
+                            // acl
+                            'resource' => 'account',
+                            'privilege' => 'register'
+                        ),
+
+                        array(
+                            'label' => 'Log out',
+                            'route' => 'user/default',
+                            'controller' => 'log',
+                            'action'    => 'out',
+                            'resource'  => 'log',
+                            'privilege' => 'out'
+                        ),
+                )
+            )
+        )
+    ),
+
 );
