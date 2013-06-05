@@ -2,6 +2,8 @@
 namespace User\Model\Entity;
 
 use Zend\Form\Annotation;
+use User\Model\PasswordAwareInterface;
+use Zend\Crypt\Password\PasswordInterface;
 
 /**
  * @Annotation\Name("users")
@@ -9,7 +11,7 @@ use Zend\Form\Annotation;
  *
  * @Entity @Table(name="users")
  */
-class User
+class User implements PasswordAwareInterface
 {
     /**
      * @Annotation\Exclude()
@@ -81,6 +83,12 @@ class User
      * @Column(type="string")
      */
     protected $photo;
+
+    /**
+     * @Annotation\Exclude()
+     * @var PasswordInterface
+     */
+    protected $adapter;
 
     /**
      * @return the $id
@@ -195,14 +203,14 @@ class User
     }
 
     /**
-     * Verifies if the passwords match
+     * Verifies if the provided password matches the stored one.
      *
-     * @param string $password
+     * @param string $password clear text password
      * @return boolean
      */
     public function verifyPassword($password)
     {
-        return ($this->password == $this->hashPassword($password));
+        return $this->adapter->verify($password, $this->password);
     }
 
     /**
@@ -212,6 +220,25 @@ class User
      */
     private function hashPassword($password)
     {
-        return md5($password);
+        return $this->adapter->create($password);
     }
+
+    /**
+     * Sets the password adapter
+     * @param PasswordInterface $adapter
+     */
+    public function setPasswordAdapter(PasswordInterface $adapter)
+    {
+        $this->adapter = $adapter;
+    }
+
+    /**
+     * Gets the password adapter
+     * @return PasswordInterface
+     */
+    public function getPasswordAdapter()
+    {
+        return $this->adapter;
+    }
+
 }

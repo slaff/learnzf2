@@ -52,9 +52,10 @@ return array(
     ),
     'service_manager' => array (
         'factories' => array(
-            'database' 	      => 'User\Service\Factory\Database',
-            'entity-manager'  => 'User\Service\Factory\EntityManager',
-            'log'             => 'User\Service\Factory\Log',
+            'database' 	       => 'User\Service\Factory\Database',
+            'entity-manager'   => 'User\Service\Factory\EntityManager',
+            'log'	       => 'User\Service\Factory\Log',
+            'password-adapter' => 'User\Service\Factory\PasswordAdapter',
         ),
         'invokables' => array(
             'table-gateway'     => 'User\Service\Invokable\TableGateway',
@@ -63,7 +64,10 @@ return array(
         ),
         'shared' => array(
             'user-entity' => false,
-        )
+        ),
+        'initializers' => array (
+            'User\Service\Initializer\Password'
+        ),
     ),
     'table-gateway' => array(
         'map' => array(
@@ -76,6 +80,7 @@ return array(
         ),
         'initializers' => array (
             // add here the list of initializers for Doctrine 2 entities..
+            'User\Service\Initializer\Password'
         ),
     ),
 );
