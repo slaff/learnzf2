@@ -50,6 +50,7 @@ return array(
                                 'controller'    => 'Test',
                                 'action'        => 'list',
                                 'page'          => '1',
+                                'pagecache'     => true,
                             ),
                         )
                     )
