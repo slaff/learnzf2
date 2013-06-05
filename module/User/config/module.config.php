@@ -58,6 +58,7 @@ return array(
         'invokables' => array(
             'table-gateway' => 'User\Service\Invokable\TableGateway',
             'user-entity'  => 'User\Model\Entity\User',
+            'doctrine-profiler' => 'User\Service\Invokable\DoctrineProfiler',
         ),
         'shared' => array(
             'user-entity' => false,
