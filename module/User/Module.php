@@ -12,6 +12,7 @@ namespace User;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\Mvc\MvcEvent;
 use Zend\Permissions\Acl\Exception\ExceptionInterface as AclException;
+use Zend\EventManager\EventManager;
 
 class Module implements AutoloaderProviderInterface
 {
@@ -118,6 +119,13 @@ class Module implements AutoloaderProviderInterface
 
         // If the role is not allowed access to the resource we have to redirect the
         // current user to the log in page.
+        $e = new EventManager('user');
+        $e->trigger('deny', $this, array(
+                                          'match' => $match,
+                                          'role'  => $role,
+                                          'acl'   =>$acl
+                                       )
+                );
 
         // Set the response code to HTTP 403: Forbidden
         $response = $event->getResponse();
