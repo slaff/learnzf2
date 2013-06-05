@@ -42,6 +42,21 @@ class Module implements AutoloaderProviderInterface
 
         $eventManager = $event->getApplication()->getEventManager();
         $eventManager->attach(MvcEvent::EVENT_ROUTE, array($this, 'protectPage'), -100);
+
+        $sharedEventManager = $event->getApplication()->getEventManager()->getSharedManager();
+        $sharedEventManager->attach('user','log-fail', function($event) use ($services) {
+            $username = $event->getParam('username');
+
+            $log = $services->get('log');
+            $log->warn('Error logging user ['.$username.']');
+        });
+
+        $sharedEventManager->attach('user','register', function($event) use ($services) {
+            $user= $event->getParam('user');
+
+            $log = $services->get('log');
+            $log->warn('Registered user ['.$user->getName().'/'.$user->getId().']');
+        });
     }
 
     public function protectPage(MvcEvent $event)
