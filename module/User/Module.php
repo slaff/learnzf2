@@ -70,5 +70,16 @@ class Module implements AutoloaderProviderInterface
         $controller = $match->getParam('controller');
         $action     = $match->getParam('action');
         $namespace  = $match->getParam('__NAMESPACE__');
+
+        $services = $event->getApplication()->getServiceManager();
+        $auth = $services->get('auth');
+        if (!$auth->hasIdentity()) {
+            // Set the response code to HTTP 401: Auth Required
+            $response = $event->getResponse();
+            $response->setStatusCode(401);
+
+            $match->setParam('controller', 'User\Controller\Log');
+            $match->setParam('action', 'in');
+        }
     }
 }
