@@ -35,6 +35,27 @@ class Module
             $eventManager->attach(MvcEvent::EVENT_DISPATCH, array($this,'getActionCache'), 2);
             $eventManager->attach(MvcEvent::EVENT_RENDER, array($this,'saveActionCache'), 0);
         }
+
+        if($services->has('cache')) {
+            $config = $services->get('config');
+            $cache  = $services->get('var-cache');
+
+            // Enables cache for services
+            if(isset($config['cache-enabled-services'])) {
+                foreach($config['cache-enabled-services'] as $serviceName) {
+                    if($services->has($serviceName)) {
+                        $services->get($serviceName)->setCache($cache);
+                    }
+                }
+            }
+
+            // Enables cache for classes
+            if(isset($config['cache-enabled-classes'])) {
+                foreach($config['cache-enabled-classes'] as $className) {
+                    call_user_func($className.'::setCache', $cache);
+                }
+            }
+        }
     }
 
     public function getConfig()
