@@ -89,29 +89,31 @@ return array(
             'application/index/index' => __DIR__ . '/../view/application/index/index.phtml',
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',
+            // paginator views
+            'paginator/sliding'       => __DIR__ . '/../view/paginator/sliding.phtml',
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',
         ),
     ),
     'navigation' => array(
-    	'default' => array(
-    		array(
-    			'label' => 'Home',
-    			'route' => 'home',
-    			'pages' => array (
-    				array(
-    					'label' => 'About',
-    					'route' => 'application/default',
-    					'controller' => 'index',
-    					'action' => 'about'
-    				),
-    				array(
-    					'label' => 'Book',
-    					'uri'   => 'http://learnzf2.com',
-    				)
-    			)
-    		),
-    	)
+        'default' => array(
+            array(
+                'label' => 'Home',
+                'route' => 'home',
+                'pages' => array (
+                    array(
+                        'label' => 'About',
+                        'route' => 'application/default',
+                        'controller' => 'index',
+                        'action' => 'about'
+                    ),
+                    array(
+                        'label' => 'Book',
+                        'uri'   => 'http://learnzf2.com',
+                    )
+                )
+            ),
+        )
     ),
 );
