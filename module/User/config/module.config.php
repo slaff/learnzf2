@@ -72,5 +72,8 @@ return array(
         'entity_path' => array (
                 __DIR__ . '/../src/User/Model/Entity/',
         ),
+        'initializers' => array (
+            // add here the list of initializers for Doctrine 2 entities.
+        ),
     ),
 );
