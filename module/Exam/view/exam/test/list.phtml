@@ -1,0 +1,47 @@
+<?php if (count($this->tests)): ?>
+
+<table class="table table-striped">
+<thead>
+    <tr>
+        <th><?= $this->translate('Name') ?></th>
+        <th><?= $this->translate('Description') ?></th>
+        <th><?= $this->translate('Duration') ?></th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr>
+</thead>
+<tbody>
+<?php foreach ($this->tests as $test): ?>
+   <tr>
+            <td><?= $this->escapehtml($test['name']) ?></td>
+            <td><?= $this->escapehtml($test['description']) ?></td>
+            <td><?= $test['duration'] ?> <?php $this->translate('minutes')?></td>
+            <td><a href="<?= $this->url('exam/default', array('controller'=> 'test', 'action'=>'take', 'id'=> $test['id'])) ?>"><?= $this->translate('Take') ?></a></td>
+            <td><?php
+                if($this->user->getId() == $test['id'] || $this->acl->isAllowed($this->user->getRole(),'test','edit')) :
+            ?>
+            <a href="<?= $this->url('exam/default', array('controller'=> 'test', 'action'=>'edit', 'id'=> $test['id'])) ?>"><?= $this->translate('Edit') ?></a>
+            <?php
+                endif;
+            ?>
+            </td>
+            <td><?php
+                if($this->acl->isAllowed($this->user->getRole(),'test','delete')) :
+            ?>
+            <a href="<?= $this->url('exam/default', array('controller'=> 'test', 'action'=>'delete', 'id'=> $test['id'])) ?>"><?= $this->translate('Delete') ?></a>
+            <?php
+                endif;
+            ?>
+            </td>
+    </tr>
+<?php endforeach; ?>
+</tbody>
+</table>
+<?php endif; ?>
+
+<?php echo $this->paginationControl($this->tests,
+                                    'Sliding',
+                                    'paginator/sliding',
+                                    array('route' => 'exam/list')
+                                    );

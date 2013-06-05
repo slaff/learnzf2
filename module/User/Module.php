@@ -13,6 +13,7 @@ use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\Mvc\MvcEvent;
 use Zend\Permissions\Acl\Exception\ExceptionInterface as AclException;
 use Zend\EventManager\EventManager;
+use Zend\View\Model\ViewModel;
 
 class Module implements AutoloaderProviderInterface
 {
@@ -59,6 +60,8 @@ class Module implements AutoloaderProviderInterface
             $log = $services->get('log');
             $log->warn('Registered user ['.$user->getName().'/'.$user->getId().']');
         });
+
+        $eventManager->attach('render', array($this, 'injectUserAcl'));
     }
 
     public function protectPage(MvcEvent $event)
@@ -133,5 +136,17 @@ class Module implements AutoloaderProviderInterface
         // and redirect the current user to the denied action
         $match->setParam('controller', 'User\Controller\Account');
         $match->setParam('action', 'denied');
+    }
+
+    public function injectUserAcl(MvcEvent $event)
+    {
+        if(!$event->getResponse()->contentSent()) {
+            $services = $event->getApplication()->getServiceManager();
+            $viewModel = $event->getResult();
+            if($viewModel instanceof ViewModel) {
+                $viewModel->setVariable('user', $services->get('user'));
+                $viewModel->setVariable('acl', $services->get('acl'));
+            }
+        }
     }
 }
