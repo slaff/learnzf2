@@ -24,6 +24,10 @@ class AccountControllerTest extends AbstractHttpControllerTestCase
         // This is how the request object can be accessed and modified.
         $request = $this->getRequest();
 
+        $user = $serviceManager->get('user');
+        $config = $serviceManager->get('config');
+        $user->setRole($config['acl']['defaults']['member_role']);
+
         // The dispatch method returns the result.
         $result = $this->dispatch('/user/account/me');
 
