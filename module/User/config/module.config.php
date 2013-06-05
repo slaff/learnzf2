@@ -56,11 +56,13 @@ return array(
             'entity-manager'   => 'User\Service\Factory\EntityManager',
             'log'	       => 'User\Service\Factory\Log',
             'password-adapter' => 'User\Service\Factory\PasswordAdapter',
+            'auth' 	       => 'User\Service\Factory\Authentication',
         ),
         'invokables' => array(
             'table-gateway'     => 'User\Service\Invokable\TableGateway',
             'user-entity'       => 'User\Model\Entity\User',
             'doctrine-profiler' => 'User\Service\Invokable\DoctrineProfiler',
+            'auth-adapter' 	=> 'User\Authentication\Adapter',
         ),
         'shared' => array(
             'user-entity' => false,
