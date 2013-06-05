@@ -11,6 +11,7 @@ namespace User;
 
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\Mvc\MvcEvent;
+use Zend\Permissions\Acl\Exception\ExceptionInterface as AclException;
 
 class Module implements AutoloaderProviderInterface
 {
@@ -71,15 +72,54 @@ class Module implements AutoloaderProviderInterface
         $action     = $match->getParam('action');
         $namespace  = $match->getParam('__NAMESPACE__');
 
-        $services = $event->getApplication()->getServiceManager();
-        $auth = $services->get('auth');
-        if (!$auth->hasIdentity()) {
-            // Set the response code to HTTP 401: Auth Required
-            $response = $event->getResponse();
-            $response->setStatusCode(401);
+        $parts           = explode('\\', $namespace);
+        $moduleNamespace = $parts[0];
 
-            $match->setParam('controller', 'User\Controller\Log');
-            $match->setParam('action', 'in');
+        $services = $event->getApplication()->getServiceManager();
+        $config = $services->get('config');
+
+        // check if the current module wants to use the ACL
+        $aclModules = $config['acl']['modules'];
+        if (!empty($aclModules) && !in_array($moduleNamespace, $aclModules)) {
+            return;
         }
+
+        $auth     = $services->get('auth');
+        $acl      = $services->get('acl');
+
+        // get the role of the current user
+        $currentUser = $services->get('user');
+        $role = $currentUser->getRole();
+
+        // Get the short name of the controller and use it as resource name
+        // Example: User\Controller\Course -> course
+        $resourceAliases = $config['acl']['resource_aliases'];
+        if (isset($resourceAliases[$controller])) {
+            $resource = $resourceAliases[$controller];
+        } else {
+            $resource = strtolower(substr($controller, strrpos($controller,'\\')+1));
+        }
+
+        // If a resource is not in the ACL add it
+        if(!$acl->hasResource($resource)) {
+            $acl->addResource($resource);
+        }
+        try {
+            if($acl->isAllowed($role, $resource, $action)) {
+                return;
+            }
+        } catch(AclException $ex) {
+            // @todo: log in the warning log the missing resource
+        }
+
+        // If the role is not allowed access to the resource we have to redirect the
+        // current user to the log in page.
+
+        // Set the response code to HTTP 403: Forbidden
+        $response = $event->getResponse();
+        $response->setStatusCode(403);
+        // and redirect the current user to the denied action
+        $match->setParam('controller', 'User\Controller\Account');
+        $match->setParam('action', 'denied');
     }
 }
