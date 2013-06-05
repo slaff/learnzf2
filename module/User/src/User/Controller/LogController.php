@@ -22,7 +22,7 @@ class LogController extends AbstractActionController
         $password = $this->params()->fromPost('password');
 
         // @todo: When the authentication is implemented the hard-coded value below has to be removed.
-        $isValid = 1;
+        $isValid = 0;
         if($isValid) {
             $this->flashmessenger()->addSuccessMessage('You are now logged in.');
 
@@ -31,6 +31,9 @@ class LogController extends AbstractActionController
                     'action'     => 'me',
             ));
         } else {
+            $log = $this->serviceLocator->get('log');
+            $log->warn('Error logging user ['.$username.']');
+
             // @todo: report some errors
         }
     }

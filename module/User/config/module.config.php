@@ -52,12 +52,13 @@ return array(
     ),
     'service_manager' => array (
         'factories' => array(
-            'database' 		  => 'User\Service\Factory\Database',
+            'database' 	      => 'User\Service\Factory\Database',
             'entity-manager'  => 'User\Service\Factory\EntityManager',
+            'log'             => 'User\Service\Factory\Log',
         ),
         'invokables' => array(
-            'table-gateway' => 'User\Service\Invokable\TableGateway',
-            'user-entity'  => 'User\Model\Entity\User',
+            'table-gateway'     => 'User\Service\Invokable\TableGateway',
+            'user-entity'       => 'User\Model\Entity\User',
             'doctrine-profiler' => 'User\Service\Invokable\DoctrineProfiler',
         ),
         'shared' => array(
@@ -74,7 +75,7 @@ return array(
                 __DIR__ . '/../src/User/Model/Entity/',
         ),
         'initializers' => array (
-            // add here the list of initializers for Doctrine 2 entities.
+            // add here the list of initializers for Doctrine 2 entities..
         ),
     ),
 );
