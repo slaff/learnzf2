@@ -12,6 +12,7 @@ namespace Application;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 use Zend\Mvc\Router\RouteMatch;
+use Zend\View\Model\ViewModel;
 
 class Module
 {
@@ -30,6 +31,9 @@ class Module
             // And this will be used to save a generated cache page.
             // The priority must be low in order to be executed after the rendering is done
             $eventManager->attach(MvcEvent::EVENT_RENDER, array($this,'savePageCache'), -10000);
+
+            $eventManager->attach(MvcEvent::EVENT_DISPATCH, array($this,'getActionCache'), 2);
+            $eventManager->attach(MvcEvent::EVENT_RENDER, array($this,'saveActionCache'), 0);
         }
     }
 
@@ -88,15 +92,76 @@ class Module
         }
     }
 
+    // Action cache implementation
+    public function getActionCache(MvcEvent $event)
+    {
+        $match = $event->getRouteMatch();
+        if(!$match) {
+            return;
+        }
+
+        if($match->getParam('actioncache')) {
+            $cache = $event->getApplication()->getServiceManager()->get('text-cache');
+            $cacheKey = $this->actionCacheKey($match);
+            $data = $cache->getItem($cacheKey);
+            if(null !== $data) {
+                // When data comes from the cache
+                // we don't want the saveActionCache method to refresh this cache
+                $match->setParam('actioncache',false);
+
+                $viewModel = $event->getViewModel();
+                $viewModel->setVariable($viewModel->captureTo(), $data);
+                $event->stopPropagation(true);
+                return $viewModel;
+            }
+        }
+    }
+
+    public function saveActionCache(MvcEvent $event)
+    {
+        $match = $event->getRouteMatch();
+        if(!$match) {
+            return;
+        }
+
+        if($match->getParam('actioncache')) {
+            $viewManager = $event->getApplication()->getServiceManager()->get('viewmanager');
+
+            $result    = $event->getResult();
+            if($result instanceof ViewModel) {
+                $cache = $event->getApplication()->getServiceManager()->get('text-cache');
+                // Warning: The line below needs improvement. It will work for all PHP templates, but have
+                //		    to be made more flexible if you plan to use other template systems.
+                $renderer = $viewManager->getRenderer();
+
+                $content = $renderer->render($result);
+                $cacheKey = $this->actionCacheKey($match);
+                $cache->setItem($cacheKey, $content);
+            }
+        }
+    }
+
     /**
      * Generates valid page cache key
      *
      * @param RouteMatch $match
+     * @param string $prefix
      * @return string
      */
-    protected function pageCacheKey(RouteMatch $match)
+    protected function pageCacheKey(RouteMatch $match, $prefix='pagecache_')
     {
-        return  'pagecache_'.str_replace('/','-',$match->getMatchedRouteName()).'_'.md5(serialize($match->getParams()));
+        return  $prefix.str_replace('/','-',$match->getMatchedRouteName()).'_'.md5(serialize($match->getParams()));
     }
 
+    /**
+     * Generates valid action cache key
+     *
+     * @param RouteMatch $match
+     * @param string $prefix
+     * @return string
+     */
+    protected function actionCacheKey(RouteMatch $match, $prefix='actioncache_')
+    {
+        return $this->pageCacheKey($match, $prefix);
+    }
 }
