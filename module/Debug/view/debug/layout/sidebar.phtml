@@ -12,4 +12,10 @@ if ($this->profiler) {
 	}
 	echo '</div>';
 }
+
+echo '<div id="cache">Cache Hits:';
+foreach($this->cache->hits as $key=>$count) {
+	echo "$key => $count<br>\n";
+}
+echo '</div>';
 ?>
