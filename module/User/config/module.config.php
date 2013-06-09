@@ -35,7 +35,7 @@ return array(
                             'constraints' => array(
                                 'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
                                 'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
-                            	'id'         => '[0-9]*',
+                                'id'         => '[0-9]*',
                             ),
                             'defaults' => array(
                             ),
@@ -50,17 +50,17 @@ return array(
             'User' => __DIR__ . '/../view',
         ),
     ),
-	'service_manager' => array (
-		'factories' => array(
-			'database' => 'User\Service\Factory\Database',
-		),
-		'invokables' => array(
-			'table-gateway' => 'User\Service\Invokable\TableGateway',
-		)
-	),
-	'table-gateway' => array(
-		'map' => array(
-			'users' => 'User\Model\User',
-		)
-	)	
+    'service_manager' => array (
+        'factories' => array(
+            'database' => 'User\Service\Factory\Database',
+        ),
+        'invokables' => array(
+            'table-gateway' => 'User\Service\Invokable\TableGateway',
+        )
+    ),
+    'table-gateway' => array(
+        'map' => array(
+            'users' => 'User\Model\User',
+        )
+    )
 );

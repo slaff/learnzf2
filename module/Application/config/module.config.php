@@ -8,10 +8,10 @@
  */
 
 return array(
-	'application' => array (
-		'name' 	  => 'Training Center',
-		'version' => '0.0.1'
-	),
+    'application' => array (
+        'name' 	  => 'Training Center',
+        'version' => '0.0.1'
+    ),
     'router' => array(
         'routes' => array(
             'home' => array(

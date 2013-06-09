@@ -22,7 +22,7 @@ class Module implements AutoloaderProviderInterface
             ),
             'Zend\Loader\StandardAutoloader' => array(
                 'namespaces' => array(
-		    // if we're in a namespace deeper than one level we need to fix the \ in the path
+            // if we're in a namespace deeper than one level we need to fix the \ in the path
                     __NAMESPACE__ => __DIR__ . '/src/' . str_replace('\\', '/' , __NAMESPACE__),
                 ),
             ),
@@ -36,24 +36,24 @@ class Module implements AutoloaderProviderInterface
 
     public function onBootstrap(MvcEvent $event)
     {
-    	$services = $event->getApplication()->getServiceManager();
-    	$dbAdapter = $services->get('database');
-    	\Zend\Db\TableGateway\Feature\GlobalAdapterFeature::setStaticAdapter($dbAdapter);
-    	
-    	$eventManager = $event->getApplication()->getEventManager();
-    	$eventManager->attach(MvcEvent::EVENT_ROUTE, array($this, 'protectPage'), -100);
+        $services = $event->getApplication()->getServiceManager();
+        $dbAdapter = $services->get('database');
+        \Zend\Db\TableGateway\Feature\GlobalAdapterFeature::setStaticAdapter($dbAdapter);
+
+        $eventManager = $event->getApplication()->getEventManager();
+        $eventManager->attach(MvcEvent::EVENT_ROUTE, array($this, 'protectPage'), -100);
     }
-    
-	public function protectPage(MvcEvent $event)
+
+    public function protectPage(MvcEvent $event)
     {
-    	$match = $event->getRouteMatch();
-    	if(!$match) {
-    		// we cannot do anything without a resolved route
-    		return;
-    	}
-    	
-    	$controller = $match->getParam('controller');
-    	$action     = $match->getParam('action');
-    	$namespace  = $match->getParam('__NAMESPACE__');
+        $match = $event->getRouteMatch();
+        if(!$match) {
+            // we cannot do anything without a resolved route
+            return;
+        }
+
+        $controller = $match->getParam('controller');
+        $action     = $match->getParam('action');
+        $namespace  = $match->getParam('__NAMESPACE__');
     }
 }

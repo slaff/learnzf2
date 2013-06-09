@@ -6,11 +6,11 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 
 use Debug\Service\Timer as TimerService;
 
-class Timer implements FactoryInterface 
+class Timer implements FactoryInterface
 {
-    public function createService(ServiceLocatorInterface $serviceLocator) 
+    public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $timer = new TimerService();
-        return $timer;    
-    }    
+        return $timer;
+    }
 }
