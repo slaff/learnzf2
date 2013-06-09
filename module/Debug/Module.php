@@ -119,6 +119,10 @@ class Module implements AutoloaderProviderInterface
             $variables['profiler'] = $profiler;
         }
 
+        if($services->has('cache-profiler')){
+            $variables['cache'] = $services->get('cache-profiler');
+        }
+
         if(!empty($variables)) {
             $viewModel->setVariables($variables);
         }
