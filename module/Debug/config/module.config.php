@@ -11,6 +11,7 @@ return array(
         ),
         'initializers' => array(
             'Debug\Service\Initializer\DbProfiler',
+            'Debug\Service\Initializer\CacheProfiler',
         ),
         'aliases' => array(
             'Application\Timer' => 'timer',
