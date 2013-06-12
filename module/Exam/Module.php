@@ -40,6 +40,15 @@ class Module implements AutoloaderProviderInterface
         $services           = $event->getApplication()->getServiceManager();
         $sharedEventManager = $event->getApplication()->getEventManager()->getSharedManager();
 
+        $sharedEventManager->attach('exam','certificate-generated', function($event) use ($services) {
+            $mail = $services->get('mail');
+            $user = $event->getParam('user');
+            $exam = $event->getParam('exam');
+            $pdf  = $event->getParam('pdf');
+
+            $mail->sendCertificate($user, $exam, $pdf);
+        });
+
         $sharedEventManager->attach('exam','taken-excellent', function($event) use ($services) {
             $user = $event->getParam('user');
             $exam = $event->getParam('exam');
