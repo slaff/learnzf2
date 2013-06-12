@@ -76,6 +76,7 @@ return array(
     'service_manager' => array(
         'invokables' => array(
             'test-manager' => 'Exam\Model\TestManager',
+            'pdf'          => 'Exam\Service\Invokable\Pdf',
         )
     ),
     'acl' => array(
@@ -85,7 +86,7 @@ return array(
         'allow' => array(
             array('guest', 'test', 'list'),
             array('member', 'test', array('list','take')),
-            array('admin', 'test', 'reset'),
+            array('admin', 'test', array('reset','certificate')),
         ),
         'modules' => array (
             'Exam',
@@ -119,5 +120,7 @@ return array(
             ),
         )
     ),
-
+    'pdf' => array(
+        'exam_certificate' => __DIR__.'/../samples/pdf/exam_certificate.pdf',
+    ),
 );

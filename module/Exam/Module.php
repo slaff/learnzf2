@@ -10,7 +10,8 @@
 namespace Exam;
 
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
-use Zend\Mvc\ModuleRouteListener;
+use Zend\Mvc\MvcEvent;
+use Zend\EventManager\EventManager;
 
 class Module implements AutoloaderProviderInterface
 {
@@ -34,12 +35,24 @@ class Module implements AutoloaderProviderInterface
         return include __DIR__ . '/config/module.config.php';
     }
 
-    public function onBootstrap($e)
+    public function onBootstrap(MvcEvent $event)
     {
-        // You may not need to do this if you're doing it elsewhere in your
-        // application
-        $eventManager        = $e->getApplication()->getEventManager();
-        $moduleRouteListener = new ModuleRouteListener();
-        $moduleRouteListener->attach($eventManager);
+        $services           = $event->getApplication()->getServiceManager();
+        $sharedEventManager = $event->getApplication()->getEventManager()->getSharedManager();
+
+        $sharedEventManager->attach('exam','taken-excellent', function($event) use ($services) {
+            $user = $event->getParam('user');
+            $exam = $event->getParam('exam');
+
+            $pdf = $services->get('pdf');
+            $pdfDocument = $pdf->generateCertificate($user, $exam['name']);
+
+            $newEvent = new EventManager('exam');
+            $newEvent->trigger('certificate-generated', $this, array (
+                    'user' => $event->getParam('user'),
+                    'exam' => $event->getParam('exam'),
+                    'pdf'  => $pdfDocument
+            ));
+        });
     }
 }

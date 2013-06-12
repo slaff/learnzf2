@@ -126,4 +126,25 @@ class TestController extends AbstractActionController
                 'page'=> $currentPage
         );
     }
+
+    public function certificateAction()
+    {
+        $pdfService = $this->serviceLocator->get('pdf');
+        $user = $this->serviceLocator->get('user');
+        $user->setName('John Smith');
+        $pdf = $pdfService->generateCertificate($user, "Exam Name");
+
+        $response = $this->getResponse();
+
+        // We need to set a content-type header so that the
+        // browser is able to recognize our pdf and display it
+        $response->getHeaders()->addHeaderLine('Content-Type: application/pdf');
+
+        $response->setContent($pdf->render());
+
+        // if we want to shortcut the execution we just return the
+        // response object and then the view and the layout are not
+        // rendered at all
+        return $response;
+    }
 }
