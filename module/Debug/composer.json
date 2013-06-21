@@ -1,0 +1,32 @@
+{
+	"name": "learnzf2/debug",
+	"description": "Debug module for the ZF2Book",
+	"keywords": [
+	      "zf2",
+	      "learn",
+	      "book",
+	      "debug",
+	      "profile"
+	 ],
+	"homepage": "http://learnzf2.com",
+	"authors": [
+	            {
+	                "name": "Slavey Karadzhov",
+	                "email": "slaff@linux-bg.org",
+	                "homepage": "http://zf2consulting.com",
+	                "role": "Author"
+	            }
+	],
+	"require": {
+		"php": ">=5.3.3",
+        "zendframework/zendframework": "2.*"
+	},
+	"autoload": {
+        "psr-0": {
+            "Debug\\": "src/"
+        },
+        "classmap": [
+            "Module.php"
+        ]
+    }
+}
