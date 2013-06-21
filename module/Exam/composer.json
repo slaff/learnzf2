@@ -1,0 +1,33 @@
+{
+	"name": "learnzf2/exam",
+	"description": "Exam module for the ZF2Book",
+	"keywords": [
+	      "zf2",
+	      "learn",
+	      "book",
+	      "exam"
+	 ],
+	"homepage": "http://learnzf2.com",
+	"authors": [
+	            {
+	                "name": "Slavey Karadzhov",
+	                "email": "slaff@linux-bg.org",
+	                "homepage": "http://zf2consulting.com",
+	                "role": "Author"
+	            }
+	],
+	"require": {
+		"php": ">=5.3.3",
+        "zendframework/zendframework": "2.*",
+		"learnzf2/user": "dev-master",
+		"zendframework/zendpdf": "2.*"
+	},
+	"autoload": {
+        "psr-0": {
+            "Exam\\": "src/"
+        },
+        "classmap": [
+            "Module.php"
+        ]
+    }
+}
