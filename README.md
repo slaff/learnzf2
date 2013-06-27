@@ -1,52 +1,70 @@
-ZendSkeletonApplication
+Learn ZF2
 =======================
+"Learn ZF2" (http://learnzf2.com) is a book dedidated to help you learn fast and easy Zend Framework 2.
 
-Introduction
+Source Code
 ------------
-This is a simple, skeleton application using the ZF2 MVC layer and module
-systems. This application is meant to be used as a starting place for those
-looking to get their feet wet with ZF2.
+The book is accompanied by source code from which you can learn by example.
+The source is based on the ZendSkeletonApplication version 2.1.0.
+You can get the latest version of the source code from its github repository:
+https://github.com/slaff/learnzf2
 
+Zend Framework Book
+-------------------
+For more information about the book and purchase options visit its official web site:
+http://learnzf2.com
 
-Installation
-------------
+Development Box
+---------------
+If you do not feel comfortable with setting up the application and its environment then 
+as a quick start you can use our [LearnZF2 dev box](https://github.com/slaff/learnzf2-box) which is using Vagrant and VirtualBox.
+If you want to experiment with Zend Framework 2 and the upcoming PHP7 you can also use the LearnZF2 VM as described [here](https://github.com/slaff/learnzf2-box#php7).
 
-Using Composer (recommended)
-----------------------------
-The recommended way to get a working copy of this project is to clone the repository
-and use `composer` to install dependencies using the `create-project` command:
+Application
+-----------
+The final version of the source code comes with ready to test Zend Framework 2 web
+application with prefilled SQLite database.
 
-    curl -s https://getcomposer.org/installer | php --
-    php composer.phar create-project --repository-url="http://packages.zendframework.com" zendframework/skeleton-application path/to/install
+The steps below are needed if you don't use the LearnZF2 dev box. 
+But we would strongly encourage you to take a look at these steps and understand their meaning.
 
-Alternately, clone the repository and manually invoke `composer` using the shipped
-`composer.phar`:
+### Preparation ###
 
-    cd my/project/dir
-    git clone git://github.com/zendframework/ZendSkeletonApplication.git
-    cd ZendSkeletonApplication
-    php composer.phar self-update
-    php composer.phar install
+In order to get the dependant packages, like Zend Framework 2 for example, we have to 
+run the following commands once in the beginning.  
 
-(The `self-update` directive is to ensure you have an up-to-date `composer.phar`
-available.)
+```
+cd learnzf2/
+./composer.phar self-update
+./composer.phar install
+```
 
-Another alternative for downloading the project is to grab it via `curl`, and
-then pass it to `tar`:
+### Run from PHP built-in server
+The easiest way to run the code, if you have PHP 5.4 or newer is to type:
+```
+cd learnzf2/
+php -S 127.0.0.1:8080 -t public/
+```
 
-    cd my/project/dir
-    curl -#L https://github.com/zendframework/ZendSkeletonApplication/tarball/master | tar xz --strip-components=1
+And then open in your browser the following URL: http://127.0.0.1:8080/
 
-You would then invoke `composer` to install dependencies per the previous
-example.
+### Run from separate web server
+In order to use the application with via separate web server(Apache, NGINX, etc) make sure that:
 
-Using Git submodules
---------------------
-Alternatively, you can install using native git submodules:
+The data/db/tc.sqlite file is readable from the web server user.
+The following commands can help you set the group to www-data and adjust the permissions.
+```
+chgrp www-data -R data/db
+chmod g+rx data/db
+chmod g+w data/db/tc.sqlite
+```
 
-    git clone git://github.com/zendframework/ZendSkeletonApplication.git --recursive
+### Application Users
+There are two users that you can use.
 
-Virtual Host
-------------
-Afterwards, set up a virtual host to point to the public/ directory of the
-project and you should be ready to go!
+1. Admin user with email: admin@learnzf2.com and password admin123
+2. Member user with email: member@learnzf2.com and password member123.
+
+If you want to take some of the sample exams that come with this application then
+you have to login and go to Exam -> List and choose one from the list.
+
