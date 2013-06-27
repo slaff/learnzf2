@@ -1,21 +1,31 @@
 {
-    "name": "zendframework/skeleton-application",
-    "description": "Skeleton Application for ZF2",
-    "license": "BSD-3-Clause",
-    "keywords": [
-        "framework",
-        "zf2"
-    ],
-    "homepage": "http://framework.zend.com/",
-    "require": {
-        "php": ">=5.3.3",
-        "zendframework/zendframework": "2.*",
-        "doctrine/common": ">=2.1",
-        "doctrine/orm": ">=2.1",
-        "zendframework/zendpdf": "2.*",
-        "learnzf2/debug": "dev-master"
-    },
-    "require-dev": {
-    	"phpunit/phpunit" : "3.7.*"
-    }
+	"name" : "learnzf2/application",
+	"description" : "The Learn ZF2 application",
+	"authors" : [{
+			"name" : "Slavey Karadzhov",
+			"email" : "slaff@linux-b.org",
+			"homepage" : "http://learnzf2.com",
+			"role" : "author"
+		}
+	],
+	"keywords" : [
+		"framework",
+		"zf2",
+		"learn"
+	],
+	"homepage" : "http://learnzf2.com",
+	"license" : [
+		"BSD-3-Clause"
+	],
+	"require" : {
+		"learnzf2/debug" : "dev-master",
+		"php" : ">=5.3.3",
+		"doctrine/common" : ">=2.1",
+		"doctrine/orm" : ">=2.1",
+		"zendframework/zendframework" : "2.*",
+		"zendframework/zendpdf" : "2.*"
+	},
+	"require-dev" : {
+		"phpunit/phpunit" : "3.7.*"
+	}
 }
