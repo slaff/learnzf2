@@ -9,6 +9,10 @@ The source is based on the ZendSkeletonApplication version 2.1.0.
 You can get the latest version of the source code from its github repository:
 https://github.com/slaff/learnzf2
 
+The book has two edition and this repository contains the source code for the second edition.
+If you are looking for the source code of the first edition of the book take a look
+at that repository: https://github.com/slaff/learnzf2-v1
+
 Zend Framework Book
 -------------------
 For more information about the book and purchase options visit its official web site:
