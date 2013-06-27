@@ -1,52 +1,60 @@
-ZendSkeletonApplication
+Learn ZF2
 =======================
+"Learn ZF2" (http://learnzf2.com) is a book dedidated to help you learn fast and easy Zend Framework 2.
 
-Introduction
+Source Code
 ------------
-This is a simple, skeleton application using the ZF2 MVC layer and module
-systems. This application is meant to be used as a starting place for those
-looking to get their feet wet with ZF2.
+The book is accompanied by source code from which you can learn by example.
+The source is based on the ZendSkeletonApplication version 2.1.0.
+You can get the latest version of the source code from its github repository:
+https://github.com/slaff/learnzf2
 
+Zend Framework Book
+-------------------
+For more information about the book and purchase options visit its official web site:
+http://learnzf2.com
 
-Installation
-------------
+Application
+-----------
+The final version of the source code comes with ready to test Zend Framework 2 web
+application with prefilled SQLite database.
 
-Using Composer (recommended)
-----------------------------
-The recommended way to get a working copy of this project is to clone the repository
-and use `composer` to install dependencies using the `create-project` command:
+### Preparation ###
+In order to get the dependant packages, like Zend Framework 2 for example, we have to 
+run the following commands once in the beginning.  
 
-    curl -s https://getcomposer.org/installer | php --
-    php composer.phar create-project --repository-url="http://packages.zendframework.com" zendframework/skeleton-application path/to/install
+```
+cd learnzf2/
+./composer.phar self-update
+./composer.phar install
+```
 
-Alternately, clone the repository and manually invoke `composer` using the shipped
-`composer.phar`:
+### Run from PHP built-in server
+The easiest way to run the code, if you have PHP 5.4 or newer is to type:
+```
+cd learnzf2/
+php -S 127.0.0.1:8080 -t public/
+```
 
-    cd my/project/dir
-    git clone git://github.com/zendframework/ZendSkeletonApplication.git
-    cd ZendSkeletonApplication
-    php composer.phar self-update
-    php composer.phar install
+And then open in your browser the following URL: http://127.0.0.1:8080/
 
-(The `self-update` directive is to ensure you have an up-to-date `composer.phar`
-available.)
+### Run from separate web server
+In order to use the application with via separate web server(Apache, NGINX, etc) make sure that:
 
-Another alternative for downloading the project is to grab it via `curl`, and
-then pass it to `tar`:
+The data/db/tc.sqlite file is readable from the web server user.
+The following commands can help you set the group to www-data and adjust the permissions.
+```
+chgrp www-data -R data/db
+chmod g+rx data/db
+chmod g+w data/db/tc.sqlite
+```
 
-    cd my/project/dir
-    curl -#L https://github.com/zendframework/ZendSkeletonApplication/tarball/master | tar xz --strip-components=1
+### Application Users
+There are two users that you can use.
 
-You would then invoke `composer` to install dependencies per the previous
-example.
+1. Admin user with email: admin@learnzf2.com and password admin123
+2. Member user with email: member@learnzf2.com and password member123.
 
-Using Git submodules
---------------------
-Alternatively, you can install using native git submodules:
+If you want to take some of the sample exams that come with this application then
+you have to login and go to Exam -> List and choose one from the list.
 
-    git clone git://github.com/zendframework/ZendSkeletonApplication.git --recursive
-
-Virtual Host
-------------
-Afterwards, set up a virtual host to point to the public/ directory of the
-project and you should be ready to go!
