@@ -110,6 +110,10 @@ class Module
             $cache = $event->getApplication()->getServiceManager()->get('text-cache');
             $cacheKey = $this->pageCacheKey($match);
             $cache->setItem($cacheKey, $data);
+            $tags = $match->getParam('tags');
+            if (is_array($tags)) {
+                $cache->setTags($cacheKey, $tags);
+            }
         }
     }
 
@@ -158,6 +162,10 @@ class Module
                 $content = $renderer->render($result);
                 $cacheKey = $this->actionCacheKey($match);
                 $cache->setItem($cacheKey, $content);
+                $tags = $match->getParam('tags');
+                if (is_array($tags)) {
+                    $cache->setTags($cacheKey, $tags);
+                }
             }
         }
     }

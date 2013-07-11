@@ -52,6 +52,7 @@ return array(
                                 'page'          => '1',
                                 // 'pagecache'     => true,
                                 'actioncache'   => true,
+                                'tags'		 => array('exam-list'),
                             ),
                         )
                     )

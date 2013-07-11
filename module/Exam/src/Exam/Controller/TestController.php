@@ -93,6 +93,9 @@ class TestController extends AbstractActionController
         $model = new Test();
         $model->delete(array());
 
+        $cache = $this->serviceLocator->get('text-cache');
+        $cache->clearByTags(array('exam-list'));
+
         // fill the default tests
         $manager = $this->serviceLocator->get('test-manager');
         $tests = $manager->getDefaultTests();
