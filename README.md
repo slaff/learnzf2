@@ -13,3 +13,7 @@ Book
 -----------
 For more information about the book and purchase options visit its official web site:
 http://learnzf2.com
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/slaff/learnzf2/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
