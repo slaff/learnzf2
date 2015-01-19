@@ -10,7 +10,9 @@ foreach($this->form1 as $element) {
 	if(!($element instanceof Zend\Form\Element\Submit)) {
 ?>
     <div class="control-group">
+            <?php if($element->getLabel()) : ?>
 	    <label class="control-label" for="<?= $element->getName() ?>"><?= $this->translate($element->getLabel()) ?></label>
+	    <?php endif; ?>
 	    <div class="controls">
             <?= $this->formElement($element) ?>
             <?= $this->formElementErrors($element)?>
