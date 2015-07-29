@@ -1,6 +1,6 @@
 Learn ZF2
 =======================
-"Learn ZF2" (http://learnzf2.com) is a book dedidated to help you learn fast and easy Zend Framework 2.
+"Learn ZF2" (http://learnzf2.com) is a book dedicated to help you learn fast and easy Zend Framework 2.
 
 Source Code
 ------------
