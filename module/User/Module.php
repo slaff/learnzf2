@@ -82,7 +82,6 @@ class Module implements AutoloaderProviderInterface
         $services = $event->getApplication()->getServiceManager();
         $config = $services->get('config');
 
-        $auth     = $services->get('auth');
         $acl      = $services->get('acl');
 
         // get the role of the current user
