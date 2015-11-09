@@ -2,6 +2,7 @@
 namespace UserTest\Controller;
 
 use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
+use Zend\Db\Adapter\Adapter;
 
 class AccountControllerTest extends AbstractHttpControllerTestCase 
 {
@@ -13,6 +14,15 @@ class AccountControllerTest extends AbstractHttpControllerTestCase
     			include __DIR__.'/../../config/application.config.php'
     	);
     	parent::setUp();
+    	
+    	$serviceManager = $this->getApplication()->getServiceManager();
+    	$db = $serviceManager->get('database');
+    	$sql  = file_get_contents(__DIR__.'/../../../sql/build.sqlite.sql')."\n" .
+    	file_get_contents(__DIR__.'/../../samples/users.sql');
+    	$queries = preg_split('/;(\s*)\n/', $sql);
+    	foreach ($queries as $query) {
+    	   $db->query($query, Adapter::QUERY_MODE_EXECUTE);
+    	}
     }
     
     public function testMeAction()
